@@ -1,5 +1,5 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -10,10 +10,22 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
+    //add book empty state array.
+    //books will be fetched from API
+    books: []
+  }
+
+  //add lifecycle event component did mount. use getAll() api method
+  //to fetch books. Use response to update component state with setState().
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
   }
 
   render() {
+    console.log(this.state.books)
     return (
       <div className="app">
         {this.state.showSearchPage ? (
