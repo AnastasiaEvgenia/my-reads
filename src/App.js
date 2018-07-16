@@ -26,7 +26,6 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log(this.state.books)
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -74,7 +73,7 @@ class BooksApp extends React.Component {
                   books={this.state.books.filter( (book) => (book.shelf === 'read') )} 
                   title="Read"
                 />
-                
+
               </div>
             </div>
             <div className="open-search">
