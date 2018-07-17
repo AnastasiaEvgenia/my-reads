@@ -32,6 +32,8 @@ class BooksApp extends React.Component {
       chosenBookInState.shelf = shelfToGo
       return {books: prevState.books}
     })
+
+    BooksAPI.update(chosenBook, shelfToGo)
   }
 
   render() {
