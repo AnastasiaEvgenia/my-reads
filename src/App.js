@@ -25,7 +25,17 @@ class BooksApp extends React.Component {
     })
   }
 
+  //method to change book shelfs with controler
+  changeBookShelf = (chosenBook, shelfToGo) => {
+    this.setState( (prevState) => {
+      const chosenBookInState =  prevState.books.find((book) => (book.id === chosenBook.id))
+      chosenBookInState.shelf = shelfToGo
+      
+    })
+  }
+
   render() {
+    console.log(this.state.books)
     return (
       <div className="app">
         {this.state.showSearchPage ? (
