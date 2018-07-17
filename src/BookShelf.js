@@ -14,7 +14,11 @@ class BookShelf extends Component {
 						   to take for each book its title, authors, image and id*/}
 
 						{this.props.books.map( (book) => (
-							<Book book={book} key={book.id}/>
+							<Book 
+								book={book} 
+								key={book.id}
+								changeBookShelf={this.props.changeBookShelf}
+								/>
 						))}
 
               		</ol>

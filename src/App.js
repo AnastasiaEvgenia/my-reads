@@ -30,7 +30,7 @@ class BooksApp extends React.Component {
     this.setState( (prevState) => {
       const chosenBookInState =  prevState.books.find((book) => (book.id === chosenBook.id))
       chosenBookInState.shelf = shelfToGo
-      
+      return {books: prevState.books}
     })
   }
 
@@ -74,14 +74,17 @@ class BooksApp extends React.Component {
                 <BookShelf 
                   books={this.state.books.filter( (book) => (book.shelf === 'currentlyReading') )} 
                   title="Currently Reading"
+                  changeBookShelf={this.changeBookShelf}
                 />
                 <BookShelf 
                   books={this.state.books.filter( (book) => (book.shelf === 'wantToRead') )} 
                   title="Want to Read"
+                  changeBookShelf={this.changeBookShelf}
                 />
                 <BookShelf 
                   books={this.state.books.filter( (book) => (book.shelf === 'read') )} 
                   title="Read"
+                  changeBookShelf={this.changeBookShelf}
                 />
 
               </div>
