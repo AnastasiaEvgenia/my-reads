@@ -10,15 +10,12 @@ class BookShelf extends Component {
             	<div className="bookshelf-books">
               		<ol className="books-grid">
 
-						{/*map over the books prop of the BookShelf component,
-						   to take for each book its title, authors, image and id*/}
-
 						{this.props.books.map( (book) => (
 							<Book 
 								book={book} 
 								key={book.id}
 								changeBookShelf={this.props.changeBookShelf}
-								/>
+							/>
 						))}
 
               		</ol>
