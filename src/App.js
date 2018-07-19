@@ -26,6 +26,8 @@ class BooksApp extends React.Component {
       const chosenBookInState =  prevState.books.find((book) => (book.id === chosenBook.id))
       if(!chosenBookInState) {
         prevState.books.push(chosenBook)
+      }else {
+        chosenBookInState.shelf = shelfToGo
       }
       return {books: prevState.books}
     })
