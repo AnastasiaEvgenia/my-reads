@@ -26,6 +26,12 @@ class BooksApp extends React.Component {
     })
   }
 
+  //created this method so property on state updates correctly
+  //previously going back to main from search page didn't work
+  showSearchPage = () => {
+    this.setState({showSearchPage: false})
+  }
+
   //method to change book shelfs with controler
   changeBookShelf = (chosenBook, shelfToGo) => {
     this.setState( (prevState) => {
@@ -42,7 +48,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchBooks />
+          <SearchBooks showSearchPage={this.showSearchPage}/>
         ) : (
           <div className="list-books">
             <div className="list-books-title">
