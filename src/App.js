@@ -1,4 +1,6 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import BookShelf from './BookShelf'
 import SearchBooks from './SearchBooks'
 import * as BooksAPI from './BooksAPI'
@@ -6,15 +8,6 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
-    //add book empty state array.
-    //books will be fetched from API
     books: []
   }
 
@@ -24,12 +17,6 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
-  }
-
-  //created this method so property on state updates correctly
-  //previously going back to main from search page didn't work
-  showSearchPage = () => {
-    this.setState({showSearchPage: false})
   }
 
   //method to change book shelfs with controler
@@ -49,23 +36,19 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+        <Route path="/search" render={() => (
           <SearchBooks 
-            showSearchPage={this.showSearchPage}
             changeBookShelf={this.changeBookShelf}
             books={this.state.books}
           />
-        ) : (
+        )}/>
+
+        <Route exact path='/' render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-
-              {/*Add BookShelf components, with two props. The shelf title and
-                 the books they contain. Books are filtered from state books array
-                 to check if book.shelf property matches the current self.*/}
-
               <div>
                 <BookShelf 
                   books={this.state.books.filter( (book) => (book.shelf === 'currentlyReading') )} 
@@ -82,18 +65,18 @@ class BooksApp extends React.Component {
                   title="Read"
                   changeBookShelf={this.changeBookShelf}
                 />
-
               </div>
             </div>
-
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to='/search'>Add a book</Link>
             </div>
           </div>
-        )}
+        )}/>
+
       </div>
     )
   }
+
 }
 
 export default BooksApp
