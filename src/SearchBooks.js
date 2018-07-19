@@ -1,4 +1,6 @@
 import React from 'react'
+import * as BooksAPI from './BooksAPI'
+import Book from './Book'
 
 class SearchBooks extends React.Component {
 
@@ -7,10 +9,17 @@ class SearchBooks extends React.Component {
 	}
 
 	updateQuery = (query) => {
-		this.setState({query: query.trim()})
+		BooksAPI.search(query).then(matchingBooks => {
+			console.log(matchingBooks)
+			this.booksFromQuery = matchingBooks
+			this.setState({query: query.trim()})
+		})
+		
 	}
 
 	render() {
+		console.log(this.state.query)
+		console.log(this.booksFromQuery)
 		return (
 			<div className="search-books">
             	<div className="search-books-bar">
@@ -33,7 +42,9 @@ class SearchBooks extends React.Component {
 	                </div>
             	</div>
             	<div className="search-books-results">
-              		<ol className="books-grid"></ol>
+              		<ol className="books-grid">{if(this.booksFromQuery){
+              			this.booksFromQuery.map((book) => <Book/>)
+              		}}</ol>
             	</div>
             </div>
 		)
