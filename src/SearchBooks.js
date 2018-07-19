@@ -8,10 +8,16 @@ class SearchBooks extends React.Component {
 		query: ''
 	}
 
+	booksFromQuery = [];
+
 	updateQuery = (query) => {
 		BooksAPI.search(query).then(matchingBooks => {
 			console.log(matchingBooks)
-			this.booksFromQuery = matchingBooks
+			if(matchingBooks.length > 0) {
+				this.booksFromQuery = matchingBooks
+			}else {
+				this.booksFromQuery = []
+			}			
 			this.setState({query: query.trim()})
 		})
 		
@@ -42,9 +48,9 @@ class SearchBooks extends React.Component {
 	                </div>
             	</div>
             	<div className="search-books-results">
-              		<ol className="books-grid">{if(this.booksFromQuery){
-              			this.booksFromQuery.map((book) => <Book/>)
-              		}}</ol>
+              		<ol className="books-grid">
+              			{this.booksFromQuery.map(book => <Book book={book} key={book.id} />)}
+              		</ol>
             	</div>
             </div>
 		)
