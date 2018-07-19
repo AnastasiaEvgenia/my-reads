@@ -11,16 +11,20 @@ class SearchBooks extends React.Component {
 	booksFromQuery = [];
 
 	updateQuery = (query) => {
-		BooksAPI.search(query).then(matchingBooks => {
-			if(matchingBooks && matchingBooks.length > 0) {
-				this.booksFromQuery = matchingBooks
-			}else {
-				this.booksFromQuery = []
-			}
-						
-			this.setState({query: query})
-		})
-		
+		if(query.length > 0){
+			BooksAPI.search(query).then(matchingBooks => {
+				if(matchingBooks && matchingBooks.length > 0) {
+					this.booksFromQuery = matchingBooks
+				}else {
+					this.booksFromQuery = []
+				}
+
+				this.setState({query: query})
+			})
+		} else {
+			this.booksFromQuery = []
+			this.setState({query: ''})
+		}	
 	}
 
 	render() {
