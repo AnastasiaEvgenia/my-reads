@@ -51,7 +51,25 @@ class SearchBooks extends React.Component {
             	</div>
             	<div className="search-books-results">
               		<ol className="books-grid">
-              			{this.booksFromQuery.map(book => <Book book={book} key={book.id} />)}
+              			{this.booksFromQuery.map(book => {
+              				this.props.books.forEach(bookInShelves => {
+              					if(book.id === bookInShelves.id) {
+              						book.shelf=bookInShelves.shelf
+              					}
+              				})
+
+              				if(!book.shelf){
+              					book.shelf='none'
+              				}
+
+              				return(
+              					<Book 
+              						book={book}
+              						key={book.id}
+              						changeBookShelf={this.props.changeBookShelf}
+              					/>
+              				)
+              			})}
               		</ol>
             	</div>
             </div>

@@ -34,9 +34,12 @@ class BooksApp extends React.Component {
 
   //method to change book shelfs with controler
   changeBookShelf = (chosenBook, shelfToGo) => {
+    chosenBook.shelf=shelfToGo
     this.setState( (prevState) => {
       const chosenBookInState =  prevState.books.find((book) => (book.id === chosenBook.id))
-      chosenBookInState.shelf = shelfToGo
+      if(!chosenBookInState) {
+        prevState.books.push(chosenBook)
+      }
       return {books: prevState.books}
     })
 
@@ -44,11 +47,14 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    console.log(this.state.books)
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <SearchBooks showSearchPage={this.showSearchPage}/>
+          <SearchBooks 
+            showSearchPage={this.showSearchPage}
+            changeBookShelf={this.changeBookShelf}
+            books={this.state.books}
+          />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
