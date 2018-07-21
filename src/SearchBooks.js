@@ -2,28 +2,27 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
+import {DebounceInput} from 'react-debounce-input'
 
 class SearchBooks extends React.Component {
 
 	state = {
-		query: ''
+		query: '',
+    booksFromQuery: []
 	}
 
-	booksFromQuery = [];
-
 	updateQuery = (query) => {
+    this.setState({query: query})
 		if(query.length > 0){
 			BooksAPI.search(query).then(matchingBooks => {
 				if(matchingBooks && matchingBooks.length > 0) {
-					this.booksFromQuery = matchingBooks
+					this.setState({ booksFromQuery: matchingBooks })
 				}else {
-					this.booksFromQuery = []
+					this.setState({ booksFromQuery: [] })
 				}
-
-				this.setState({query: query})
 			})
 		} else {
-			this.booksFromQuery = []
+			this.setState({ booksFromQuery: [] })
 			this.setState({query: ''})
 		}	
 	}
@@ -34,17 +33,18 @@ class SearchBooks extends React.Component {
             	<div className="search-books-bar">
               		<Link to='/' className="close-search">Close</Link>
               		<div className="search-books-input-wrapper">
-		                <input 
+		                <DebounceInput
                 			type="text" 
                 			placeholder="Search by title or author"
                 			value={this.state.query}
                 			onChange={(evt) => (this.updateQuery(evt.target.value))}
+                      debounceTimeout={500}
                 		/>
 	                </div>
             	</div>
             	<div className="search-books-results">
               		<ol className="books-grid">
-              			{this.booksFromQuery.map(book => {
+              			{this.state.booksFromQuery.map(book => {
               				this.props.books.forEach(bookInShelves => {
               					if(book.id === bookInShelves.id) {
               						book.shelf=bookInShelves.shelf

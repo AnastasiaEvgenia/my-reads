@@ -2,7 +2,7 @@
 
 ## Introduction.
 
-This is a project for the Udacity Front-End Web Developer
+[This](https://anastasiaevgenia.github.io/my-reads/build) is a project for the Udacity Front-End Web Developer
 Nanodegree program. The objective of the project is to create
 a bookshelf app using React. The app allows you to search books
 and categorize them in shelves depending on whether you have read
